@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.11
+    working_directory: /go/src/github.com/krhubert/gox
+    steps:
+      - checkout
+      - run: go build ./...
+      - run: go test -v -race ./...
+
+  lint:
+    docker:
+      - image: mozgiii/gometalinter-docker
+    working_directory: /go/src/github.com/krhubert/gox
+    steps:
+      - checkout
+      - run: go install ./...
+      - run:
+          name: run linters
+          command:  |
+            gometalinter       \
+            --vendor           \
+            --disable-all      \
+            --enable=gofmt     \
+            --enable=golint    \
+            --enable=goimports \
+            --enable=misspell  \
+            --enable=vet ./...
+
+workflows:
+  version: 2
+  test_lint:
+    jobs:
+      - build
+      - lint
