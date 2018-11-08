@@ -115,6 +115,12 @@ func FindLongest(a []string) int {
 	return l
 }
 
+// Lines splits the string s around each instance of new line character.
+// It returns a slice of substrings of s.
+func Lines(s string) []string {
+	return strings.Split(s, "\n")
+}
+
 // Alphabet ASCII
 var Alphabet = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.")
 
