@@ -31,16 +31,11 @@ func CompareSlices(a, b []string) bool {
 
 	for i := range a {
 		m[a[i]]++
-		m[b[i]]++
 	}
 
-	if len(m) != len(a) {
-		return false
-	}
-
-	for _, v := range m {
-		// each elemetn should be exacly once in each slice.
-		if v != 2 {
+	for i := range b {
+		m[b[i]]--
+		if m[b[i]] != 0 {
 			return false
 		}
 	}
